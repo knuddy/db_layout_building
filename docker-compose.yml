@@ -1,0 +1,85 @@
+version: '3.4'
+
+services:
+  redis:
+    image: redis:latest
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+
+  db:
+    image: postgres:12.0-alpine
+    container_name: db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - "1396:5432"
+    env_file:
+      - .env
+    networks:
+      - app-network
+    restart: always
+
+#  web:
+#    image: web-image
+#    container_name: web
+#    command: "bash /usr/src/app/entrypoint.sh"
+#    depends_on:
+#      - db
+#      - redis
+#    ports:
+#      - "8005:8005"
+#    env_file:
+#      - .env
+#    networks:
+#      - app-network
+#    volumes:
+#      - .:/usr/src/app
+#      - ./staticfiles:/usr/src/app/staticfiles
+#    restart: always
+
+#  celery_worker:
+#    image: web-image
+#    container_name: celery_worker
+#    command: sh -c "celery -A proj worker -l info --concurrency 2"
+#    depends_on:
+#      - db
+#      - redis
+#      - web
+#    env_file:
+#      - .env
+#    hostname: celery_worker
+#    networks:
+#      - app-network
+#    volumes:
+#      - .:/usr/src/app
+#      - ./staticfiles:/usr/src/app/staticfiles
+#    restart: on-failure
+#
+#  celery_beat:
+#    image: web-image
+#    container_name: celery_beat
+#    command: sh -c "celery -A proj beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler"
+#    depends_on:
+#      - db
+#      - redis
+#      - web
+#    env_file:
+#      - .env
+#    hostname: celery_beat
+#    networks:
+#      - app-network
+#    restart: on-failure
+#    volumes:
+#      - .:/usr/src/app
+#      - ./staticfiles:/usr/src/app/staticfiles
+
+networks:
+  app-network: {}
+
+
+volumes:
+  postgres_data:
