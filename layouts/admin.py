@@ -6,6 +6,9 @@ from layouts.models import PageObject, Page
 class PageObjectInlineFormset(forms.models.BaseInlineFormSet):
     def clean(self):
         super().clean()
+        if not self.forms:
+            return
+
         parent: Page = self.forms[0].cleaned_data['page']
         total_space_used = 0
         for form in self.forms:
@@ -27,9 +30,10 @@ class PageObjectInline(admin.TabularInline):
 
 @admin.register(Page)
 class PageAdmin(admin.ModelAdmin):
+    fieldsets = (
+        ('', {'fields': ('name', )}),
+        ('Layout', {'fields': ('bounds', 'columns')}),
+        ('Only Relevant When BOUNDS = CONTAIN', {'fields': ('rows',)}),
+        ('Only Relevant When BOUNDS = GROW', {'fields': ('fixed_row_size', )}),
+    )
     inlines = [PageObjectInline]
-
-
-@admin.register(PageObject)
-class PageObjectAdmin(admin.ModelAdmin):
-    pass
