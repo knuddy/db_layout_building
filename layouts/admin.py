@@ -34,6 +34,6 @@ class PageAdmin(admin.ModelAdmin):
     fieldsets = (
         ('', {'fields': (('name', 'slug'),)}),
         ('Layout', {'fields': (('bounds', 'columns', 'rows'),)}),
-        ('Optional extras for use when Bounds is Grow', {'fields': (('row_size', 'row_unit'),)}),
+        ('Extras for use when Bounds is Grow', {'fields': (('row_size', 'row_unit'),)}),
     )
     inlines = [PageObjectInline]
