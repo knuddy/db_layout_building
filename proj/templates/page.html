@@ -3,7 +3,7 @@
 {% block base-css %}
   <style>
     :root {
-      --content-padding: 0.5rem;
+      --content-padding: {{ object.content_spacing }}rem;
     }
 
     .page {

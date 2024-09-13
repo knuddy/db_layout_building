@@ -33,7 +33,7 @@ class PageObjectInline(admin.TabularInline):
 class PageAdmin(admin.ModelAdmin):
     fieldsets = (
         ('', {'fields': (('name', 'slug'),)}),
-        ('Layout', {'fields': (('bounds', 'columns', 'rows'),)}),
+        ('Layout', {'fields': (('bounds', 'columns', 'rows', 'content_spacing'),)}),
         ('Extras for use when Bounds is Grow', {'fields': (('row_size', 'row_unit'),)}),
     )
     inlines = [PageObjectInline]

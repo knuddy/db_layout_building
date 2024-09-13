@@ -16,6 +16,7 @@ class Page(models.Model):
     slug = models.SlugField(blank=False, null=False, unique=True)
     bounds = models.CharField(max_length=20, choices=PageBounds.choices, default=PageBounds.CONTAIN, blank=False, null=False)
     columns = models.IntegerField(default=1, validators=[MinValueValidator(1)])
+    content_spacing = models.FloatField(default=0.5, validators=[MinValueValidator(0.0)], blank=False, null=False, help_text="Spacing between objects. Unit is in REM")
     rows = models.IntegerField(validators=[MinValueValidator(1)], blank=False, null=False)
     row_size = models.IntegerField(default=0, validators=[MinValueValidator(0)], blank=True, null=True)
     row_unit = models.CharField(max_length=5, choices=RowUnit.choices, default=RowUnit.PX, blank=True, null=True)
