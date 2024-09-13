@@ -8,15 +8,12 @@
 
     .page {
       display: grid;
-      grid-template-columns: repeat({{ page.columns }}, 1fr);
-    {% if page.bounds == "Contain" %}
-      grid-template-rows: repeat({{ page.rows }}, 1fr);
-    {% else %}
-      grid-auto-rows: {{ page.fixed_row_size }}px;
-    {% endif %}
-
-      height: 100%;
+      grid-template-columns: repeat({{ object.columns }}, 1fr);
+      grid-template-rows: {{ object.css_grid_template_row_value }};
+      min-height: 100%;
       gap: var(--content-padding);
+      padding: var(--content-padding);
+      box-sizing: border-box;
     }
 
     .item {
@@ -34,9 +31,9 @@
 
 {% block base-content %}
   <div class="page">
-    {% for obj in page.objects_list %}
+    {% for obj in object.objects_list %}
       <div class="item" style="grid-column-end: span {{ obj.column_span }}; grid-row-end: span {{ obj.row_span }};">
-        {{ obj.id }}
+        {{ obj.position }}
       </div>
     {% endfor %}
   </div>

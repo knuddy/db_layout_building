@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.views.generic import DetailView
 from layouts.models import Page
 
 
-def render_page(request):
-    page = Page.objects.get(pk=1)
-    return render(request, 'page.html',  {'page': page})
+class PageView(DetailView):
+    model = Page
+    template_name = "page.html"
